@@ -1,0 +1,11 @@
+[package]
+name = "sidekick-wrapper"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+#wayland-clipboard-listener = "0.2.6"
+wl-clipboard-rs = "0.9.1"
+base64 = "0.22.1"
+wry = "0.48.1" 
+tao = "0.31.1"
