@@ -1,7 +1,7 @@
 ## What is this?
 This is a sidekick wrapper that opens a webview for the running sidekick web server.
 You can either run it locally   via docker or just compile and run it directly. 
-Kudos to them: (https://github.com/Sidekick-Poe/Sidekick)[https://github.com/Sidekick-Poe/Sidekick]
+Kudos to them: [Sidekick](https://github.com/Sidekick-Poe/Sidekick)
 
 What does this basically do is get the contents of your clipboard, create base64 from that value and pass it to the url of sidekick.
 
