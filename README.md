@@ -9,6 +9,8 @@ What does this basically do is get the contents of your clipboard, create base64
 
 `Ctrl + C` from PoE2 then run the binary. For me I just attached a bind key on my config and I just pressed `Ctrl + D` and it will open a window for me.
 
+If the item copied is a "Waystone", it would do a map check, else it would price check.
+
 You can also press `Escape` to close the window. Remember that every time you run the binary it just opens a new window.
 
 ## How to buid 

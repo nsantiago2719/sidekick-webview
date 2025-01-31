@@ -10,12 +10,12 @@ use wl_clipboard_rs::paste::{get_contents, ClipboardType, Error, MimeType, Seat}
 use wry::WebViewBuilder;
 
 fn main() {
-    let item64: String = get_content_from_clipboard();
+    let item64: (String, bool) = get_content_from_clipboard();
 
     let _ = create_webview(item64);
 }
 
-fn create_webview(item64: String) -> wry::Result<()> {
+fn create_webview(item_details: (String, bool)) -> wry::Result<()> {
     let event_loop = EventLoop::new();
     let window = WindowBuilder::new()
         .with_title("Sidekick Wrapper")
@@ -27,7 +27,15 @@ fn create_webview(item64: String) -> wry::Result<()> {
         .with_min_inner_size(tao::dpi::LogicalSize::new(500.0, 700.0))
         .build(&event_loop)
         .unwrap();
-    let url: String = format!("http://localhost:5000/trade/xurl_{}", item64);
+
+    let (item64, waystone) = item_details;
+    // Check if the item is waystone and use the proper URL for
+    // map check else use the trade url
+    let url: String = if waystone {
+        format!("http://localhost:5000/map/xurl_{}", item64)
+    } else {
+        format!("http://localhost:5000/trade/xurl_{}", item64)
+    };
     let builder = WebViewBuilder::new().with_url(&url);
 
     #[cfg(any(
@@ -81,7 +89,7 @@ fn create_webview(item64: String) -> wry::Result<()> {
     });
 }
 
-fn get_content_from_clipboard() -> String {
+fn get_content_from_clipboard() -> (String, bool) {
     let result = get_contents(ClipboardType::Regular, Seat::Unspecified, MimeType::Text);
     let copied_text: String;
     match result {
@@ -102,5 +110,6 @@ fn get_content_from_clipboard() -> String {
         }
     }
 
-    return URL_SAFE.encode(&copied_text);
+    let waystone: bool = copied_text.contains("Waystone");
+    return (URL_SAFE.encode(&copied_text), waystone);
 }
