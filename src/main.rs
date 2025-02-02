@@ -38,13 +38,7 @@ fn create_webview(item_details: (String, bool)) -> wry::Result<()> {
     };
     let builder = WebViewBuilder::new().with_url(&url);
 
-    #[cfg(any(
-        target_os = "windows",
-        target_os = "macos",
-        target_os = "ios",
-        target_os = "android"
-    ))]
-    let _webview = builder.build(&window)?;
+    // Build only for linux
     #[cfg(not(any(
         target_os = "windows",
         target_os = "macos",
@@ -68,6 +62,7 @@ fn create_webview(item_details: (String, bool)) -> wry::Result<()> {
             } => {
                 *control_flow = ControlFlow::Exit;
             }
+            // close program when Escape key is pressed
             Event::WindowEvent {
                 event:
                     WindowEvent::KeyboardInput {
